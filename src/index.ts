@@ -1,11 +1,9 @@
 import dotenv from 'dotenv';
 import app from './app';
-import path from 'path';
 
-const { ENVIRONMENT = 'develop' } = process.env;
-dotenv.config({ path: path.resolve(__dirname, `./assets/environments/${ENVIRONMENT}.env`) });
+dotenv.config();
 
-const { HTTP_PORT } = process.env;
+const { HTTP_PORT, ENVIRONMENT = 'develop' } = process.env;
 const onListen = (error: any) => {
   if (error) {
     console.error(error, 'error starting server');
