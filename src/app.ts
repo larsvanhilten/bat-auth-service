@@ -6,7 +6,10 @@ const app = express();
 const router = express.Router();
 
 // TODO: 'Add origin, remove credentials?'
-app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
+if (process.env.ENVIRONMENT !== 'production') {
+  app.use(cors());
+}
+
 app.use(express.json());
 app.use(routes(router));
 export default app;
