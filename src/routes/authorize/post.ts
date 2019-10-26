@@ -4,6 +4,8 @@ import joi from '@hapi/joi';
 import axios from 'axios';
 import errorHandler from '../../helpers/error-handler';
 import { Request, Response } from 'express';
+import verifyTwitchToken from '../../helpers/jwt-verify-twitch';
+import signJwt from '../../helpers/jwt-sign';
 
 const schema = joi.object({
   code: joi
@@ -25,14 +27,15 @@ export default async (req: Request, res: Response) => {
       code
     };
     const response = await axios.post('https://id.twitch.tv/oauth2/token', null, { params });
-    const { access_token, expires_in, id_token, token_type } = response.data;
+    const { id_token } = response.data;
+
+    const { preferred_username } = await verifyTwitchToken(id_token);
+    const token = signJwt({ username: preferred_username });
 
     res.send({
       data: {
-        access_token,
-        id_token,
-        expires_in,
-        token_type
+        token,
+        token_type: 'bearer'
       }
     });
   } catch (error) {
