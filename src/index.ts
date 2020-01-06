@@ -3,14 +3,14 @@ import app from './app';
 
 dotenv.config();
 
-const { HTTP_PORT, ENVIRONMENT = 'develop' } = process.env;
+const { HTTP_PORT, NODE_ENV = 'develop' } = process.env;
 const onListen = (error: any) => {
   if (error) {
     console.error(error, 'error starting server');
     process.exit(1);
   }
 
-  console.info(`(${ENVIRONMENT} environment) server listening on :: ${HTTP_PORT}`);
+  console.info(`(${NODE_ENV} environment) server listening on :: ${HTTP_PORT}`);
 };
 
 const onError = (error: any) => {

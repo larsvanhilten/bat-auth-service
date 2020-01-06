@@ -1,5 +1,3 @@
-// Because current Joi typings module is missing V16
-//  @ts-ignore:
 import joi from '@hapi/joi';
 import axios from 'axios';
 import errorHandler from '../../helpers/error-handler';
@@ -34,8 +32,8 @@ export default async (req: Request, res: Response) => {
 
     res.send({
       data: {
-        token,
-        token_type: 'bearer'
+        token_type: 'bearer',
+        token
       }
     });
   } catch (error) {
